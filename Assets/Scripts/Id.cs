@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Id
+public class IdGen
 {
     private static int m_id = 0;
 

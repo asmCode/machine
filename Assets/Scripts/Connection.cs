@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Connection
 {
-    public int InputPinId { get; set; }
-    public int OutputPinId { get; set; }
+    public int PinInId { get; set; }
+    public int PinOutId { get; set; }
 }
