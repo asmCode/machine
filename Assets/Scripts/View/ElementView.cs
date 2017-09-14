@@ -20,4 +20,10 @@ public abstract class ElementView : MonoBehaviour
     {
 
     }
+
+    void Awake()
+    {
+        var inputPinsContainer = transform.Find("InputPins");
+        dajesz
+    }
 }
