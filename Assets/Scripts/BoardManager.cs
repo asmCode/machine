@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class BoardManager
 {
+    public System.Action<int> ElementAdded;
+    public System.Action<int, int> ConnectionCreated;
+
     private Dictionary<int, InputPin> mInputPins = new Dictionary<int, InputPin>();
     private Dictionary<int, OutputPin> mOutputPins = new Dictionary<int, OutputPin>();
     private List<Connection> mConnections = new List<Connection>();
     private Dictionary<int, Element> mElements = new Dictionary<int, Element>();
 
-    public int AddElement(int type)
+    public int AddElement(int type, Point3 position)
     {
         var element = ElementFactory.Create(type, 0, 0);
+        element.Position = position;
         mElements.Add(element.Id, element);
 
         foreach (var pinId in element.InputPinIds)
@@ -20,7 +24,19 @@ public class BoardManager
         foreach (var pinId in element.OutputPinIds)
             AddOutputPin(pinId, element.Id);
 
+        if (ElementAdded != null)
+            ElementAdded(element.Id);
+
         return element.Id;
+    }
+
+    public ElementType GetElementType(int elementId)
+    {
+        var element = GetElement(elementId);
+        if (element == null)
+            return ElementType.None;
+
+        return element.ElementType;
     }
 
     public int AddInputPin(int pinId, int elementId)
@@ -54,6 +70,9 @@ public class BoardManager
         connection.PinOutId = pinOutId;
 
         mConnections.Add(connection);
+
+        if (ConnectionCreated != null)
+            ConnectionCreated(pinInId, pinOutId);
     }
 
     public void ResolveAll()

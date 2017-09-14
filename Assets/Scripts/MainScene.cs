@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MainScene : MonoBehaviour
 {
+    public PinView mPinView;
+
     private Game mGame;
 
     private void Awake()
@@ -21,6 +23,16 @@ public class MainScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+            mPinView.SetHoover();
+        if (Input.GetKeyDown(KeyCode.W))
+            mPinView.SetSelected();
+        if (Input.GetKeyDown(KeyCode.E))
+            mPinView.SetNormal();
 
+        if (Input.GetKeyDown(KeyCode.R))
+            mPinView.SetSignalValue(1.0f);
+        if (Input.GetKeyDown(KeyCode.T))
+            mPinView.SetSignalValue(0.0f);
     }
 }

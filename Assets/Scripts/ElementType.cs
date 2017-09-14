@@ -1,6 +1,7 @@
 ﻿public enum ElementType
 {
-    ConstantSignalSource = 1,
+    None = 0,
+    ConstantSignalSource,
     GateAnd,
     GateNot
 }

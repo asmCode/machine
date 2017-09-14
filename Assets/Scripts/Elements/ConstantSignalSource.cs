@@ -12,6 +12,8 @@ public class ConstantSignalSource : Element
         mPinOId = IdGen.GetId();
     }
 
+    public override ElementType ElementType { get { return ElementType.ConstantSignalSource; } }
+
     public override int[] InputPinIds
     {
         get

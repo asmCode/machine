@@ -5,8 +5,10 @@ using UnityEngine;
 public abstract class Element
 {
     public int Id { get; set; }
+    public abstract ElementType ElementType { get; }
     public abstract int[] InputPinIds { get; }
     public abstract int[] OutputPinIds { get; }
+    public Point3 Position { get; set; }
 
     public Element()
     {

@@ -16,6 +16,8 @@ public class GateAnd : Element
         mPinOId = IdGen.GetId();
     }
 
+    public override ElementType ElementType { get { return ElementType.GateAnd; } }
+
     public override int[] InputPinIds
     {
         get

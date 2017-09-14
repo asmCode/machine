@@ -14,6 +14,8 @@ public class GateNot : Element
         mPinOId = IdGen.GetId();
     }
 
+    public override ElementType ElementType { get { return ElementType.GateNot; } }
+
     public override int[] InputPinIds
     {
         get
