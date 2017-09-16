@@ -16,9 +16,30 @@ public class BoardViewController
         boardManager.ConnectionCreated += HandleConnectionCreated;
     }
 
+    public void Update()
+    {
+        for (int i = 0; i < mBoardManager.ElementCount; i++)
+        {
+            var element = mBoardManager.GetElement(i);
+            var elementView = mBoardView.GetElementById(element.Id);
+            if (elementView == null)
+                continue;
+
+            float[] inputPinValues = new float[element.InputPinIds.Length];
+            for (int j = 0; j < inputPinValues.Length; j++)
+                inputPinValues[j] = mBoardManager.GetSignalValue(element.InputPinIds[j]);
+            elementView.SetInputPinsSignalValue(inputPinValues);
+
+            float[] outputPinValues = new float[element.OutputPinIds.Length];
+            for (int j = 0; j < outputPinValues.Length; j++)
+                outputPinValues[j] = mBoardManager.GetSignalValue(element.OutputPinIds[j]);
+            elementView.SetOutputPinsSignalValue(outputPinValues);
+        }
+    }
+
     private void HandleElementAdded(int elementId)
     {
-        var element = mBoardManager.GetElement(elementId);
+        var element = mBoardManager.GetElementById(elementId);
         if (element == null)
             return;
 

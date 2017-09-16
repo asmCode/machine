@@ -10,13 +10,26 @@ public class BoardManager
     private Dictionary<int, InputPin> mInputPins = new Dictionary<int, InputPin>();
     private Dictionary<int, OutputPin> mOutputPins = new Dictionary<int, OutputPin>();
     private List<Connection> mConnections = new List<Connection>();
-    private Dictionary<int, Element> mElements = new Dictionary<int, Element>();
+    private List<Element> mElements = new List<Element>();
+
+    public int ElementCount
+    {
+        get { return mElements.Count; }
+    }
+
+    public Element GetElement(int index)
+    {
+        if (index >= mElements.Count)
+            return null;
+
+        return mElements[index];
+    }
 
     public int AddElement(int type, Point3 position)
     {
         var element = ElementFactory.Create(type, 0, 0);
         element.Position = position;
-        mElements.Add(element.Id, element);
+        mElements.Add(element);
 
         foreach (var pinId in element.InputPinIds)
             AddInputPin(pinId, element.Id);
@@ -32,7 +45,7 @@ public class BoardManager
 
     public ElementType GetElementType(int elementId)
     {
-        var element = GetElement(elementId);
+        var element = GetElementById(elementId);
         if (element == null)
             return ElementType.None;
 
@@ -92,7 +105,7 @@ public class BoardManager
     {
         foreach (var element in mElements)
         {
-            element.Value.Dump(this);
+            element.Dump(this);
         }
     }
 
@@ -169,18 +182,18 @@ public class BoardManager
     {
         var inputPin = GetInputPin(pinId);
         if (inputPin != null)
-            return GetElement(inputPin.ElementId);
+            return GetElementById(inputPin.ElementId);
 
         var outputPin = GetOutputPin(pinId);
         if (outputPin != null)
-            return GetElement(outputPin.ElementId);
+            return GetElementById(outputPin.ElementId);
 
         return null;
     }
 
-    public Element GetElement(int elementId)
+    public Element GetElementById(int elementId)
     {
-        return mElements[elementId];
+        return mElements.Find((t) => { return t.Id == elementId; });
     }
 
     private InputPin GetInputPin(int inputPinId)

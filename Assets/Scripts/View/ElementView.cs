@@ -4,6 +4,10 @@ using UnityEngine;
 
 public abstract class ElementView : MonoBehaviour
 {
+    private PinView[] mInputPins;
+    private PinView[] mOutputPins;
+
+    public int ElementId { get; set; }
     public abstract ElementType ElementType { get; }
 
     public void SetPosition(Vector3 position)
@@ -13,17 +17,28 @@ public abstract class ElementView : MonoBehaviour
 
     public void SetInputPinsSignalValue(float[] signalValues)
     {
+        if (mInputPins.Length != signalValues.Length)
+            return;
 
+        for (int i = 0; i < signalValues.Length; i++)
+            mInputPins[i].SetSignalValue(signalValues[i]);
     }
 
     public void SetOutputPinsSignalValue(float[] signalValues)
     {
+        if (mOutputPins.Length != signalValues.Length)
+            return;
 
+        for (int i = 0; i < signalValues.Length; i++)
+            mOutputPins[i].SetSignalValue(signalValues[i]);
     }
 
     void Awake()
     {
         var inputPinsContainer = transform.Find("InputPins");
-        dajesz
+        mInputPins = inputPinsContainer.GetComponentsInChildren<PinView>();
+
+        var outputPinsContainer = transform.Find("OutputPins");
+        mOutputPins = outputPinsContainer.GetComponentsInChildren<PinView>();
     }
 }
