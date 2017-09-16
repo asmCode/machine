@@ -22,7 +22,10 @@ public abstract class Element
         string dump = "";
 
         dump += string.Format("Element: {0}\n", GetType().ToString());
-        dump += string.Format("\tOutput Pin: {0}\n", signalManager.GetSignalValue(OutputPinIds[0]));
+        if (OutputPinIds.Length > 0)
+            dump += string.Format("\tOutput Pin: {0}\n", signalManager.GetSignalValue(OutputPinIds[0]));
+        if (InputPinIds.Length > 0)
+            dump += string.Format("\tInput Pin Pin: {0}\n", signalManager.GetSignalValue(InputPinIds[0]));
         dump += "\n";
 
         Debug.Log(dump);

@@ -17,6 +17,9 @@ public abstract class ElementView : MonoBehaviour
 
     public void SetInputPinsSignalValue(float[] signalValues)
     {
+        if (mInputPins == null)
+            return;
+
         if (mInputPins.Length != signalValues.Length)
             return;
 
@@ -26,6 +29,9 @@ public abstract class ElementView : MonoBehaviour
 
     public void SetOutputPinsSignalValue(float[] signalValues)
     {
+        if (mOutputPins  == null)
+            return;
+
         if (mOutputPins.Length != signalValues.Length)
             return;
 
@@ -33,7 +39,7 @@ public abstract class ElementView : MonoBehaviour
             mOutputPins[i].SetSignalValue(signalValues[i]);
     }
 
-    void Awake()
+    public virtual void Awake()
     {
         var inputPinsContainer = transform.Find("InputPins");
         mInputPins = inputPinsContainer.GetComponentsInChildren<PinView>();

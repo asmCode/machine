@@ -3,5 +3,6 @@
     None = 0,
     ConstantSignalSource,
     GateAnd,
-    GateNot
+    GateNot,
+    LedDiode,
 }

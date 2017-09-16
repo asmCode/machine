@@ -92,12 +92,17 @@ public class BoardManager
     {
         ClearResolvedFlag();
 
-        foreach (var outputPin in mOutputPins)
-        {
-            if (IsResolved(outputPin.Key))
-                continue;
+        //foreach (var outputPin in mOutputPins)
+        //{
+        //    if (IsResolved(outputPin.Key))
+        //        continue;
 
-            Resolve(outputPin.Key);
+        //    Resolve(outputPin.Key);
+        //}
+
+        foreach (var element in mElements)
+        {
+            element.Resolve(this);
         }
     }
 
