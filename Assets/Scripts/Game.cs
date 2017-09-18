@@ -14,6 +14,8 @@ public class Game
         ElementFactory.RegisterElementCreator((int)ElementType.GateAnd, () => { return new GateAnd(); });
         ElementFactory.RegisterElementCreator((int)ElementType.GateNot, () => { return new GateNot(); });
         ElementFactory.RegisterElementCreator((int)ElementType.LedDiode, () => { return new LedDiode(); });
+        ElementFactory.RegisterElementCreator((int)ElementType.Belt, () => { return new Belt(); });
+        ElementFactory.RegisterElementCreator((int)ElementType.Ball, () => { return new Ball(); });
 
         mBoardManager = new BoardManager();
         mBoardView = new BoardView();
@@ -27,6 +29,15 @@ public class Game
         int not2Id = mBoardManager.AddElement((int)ElementType.GateNot, new Point3(-3, 0, 0));
 
         int ledId = mBoardManager.AddElement((int)ElementType.LedDiode, new Point3(-4, 0, 0));
+
+        int beltId = mBoardManager.AddElement((int)ElementType.Belt, new Point3(4, 0, 1));
+        var belt = mBoardManager.GetElementById(beltId);
+        int beltPowerSupplyId = mBoardManager.AddElement((int)ElementType.ConstantSignalSource, new Point3(4, 0, 0));
+        var beltPowerSupply = mBoardManager.GetElementById(beltPowerSupplyId);
+        int ballId = mBoardManager.AddElement((int)ElementType.Ball, new Point3(4, 1, 1));
+        var ball = mBoardManager.GetElementById(ballId);
+
+        mBoardManager.SetConnection(belt.InputPinIds[0], beltPowerSupply.OutputPinIds[0]);
 
         var source = mBoardManager.GetElementById(id1);
         var source2 = mBoardManager.GetElementById(id3);

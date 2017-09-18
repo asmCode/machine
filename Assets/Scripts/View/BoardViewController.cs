@@ -14,6 +14,7 @@ public class BoardViewController
 
         boardManager.ElementAdded += HandleElementAdded;
         boardManager.ConnectionCreated += HandleConnectionCreated;
+        boardManager.ElementLocationChanged += HandleElementLocationChanged;
     }
 
     public void Update()
@@ -76,5 +77,14 @@ public class BoardViewController
     private void HandleConnectionCreated(int inputPinId, int outputPinId)
     {
         Debug.Log("Connection created");
+    }
+
+    private void HandleElementLocationChanged(Element element)
+    {
+        var elementView = mBoardView.GetElementById(element.Id);
+        if (elementView == null)
+            return;
+
+        elementView.SetPosition(new Vector3(element.Position.X, element.Position.Y, element.Position.Z));
     }
 }

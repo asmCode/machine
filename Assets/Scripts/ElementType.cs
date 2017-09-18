@@ -5,4 +5,6 @@
     GateAnd,
     GateNot,
     LedDiode,
+    Belt,
+    Ball,
 }

@@ -6,6 +6,7 @@ public class BoardManager
 {
     public System.Action<int> ElementAdded;
     public System.Action<int, int> ConnectionCreated;
+    public System.Action<Element> ElementLocationChanged;
 
     private Dictionary<int, InputPin> mInputPins = new Dictionary<int, InputPin>();
     private Dictionary<int, OutputPin> mOutputPins = new Dictionary<int, OutputPin>();
@@ -86,6 +87,33 @@ public class BoardManager
 
         if (ConnectionCreated != null)
             ConnectionCreated(pinInId, pinOutId);
+    }
+
+    public void RequestMovement(Point3 elementLocation, Point3 offset)
+    {
+        var element = GetElementAtLocation(elementLocation);
+        if (element == null)
+            return;
+
+        SetElementLocation(element, element.Position + offset);
+    }
+
+    public void SetElementLocation(Element element, Point3 elementLocation)
+    {
+        element.Position = elementLocation;
+
+        if (ElementLocationChanged != null)
+            ElementLocationChanged(element);
+    }
+
+    public Element GetElementAtLocation(Point3 elementLocation)
+    {
+        var element = mElements.Find((e) =>
+        {
+            return e.Position == elementLocation;
+        });
+
+        return element;
     }
 
     public void ResolveAll()
